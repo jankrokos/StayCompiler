@@ -16,9 +16,22 @@ public class Main {
 //                "print(myStr);" +
 //                "print(\"hellaw\");" +
 //                "print(myInt);";
-        String code = "int firstInt = 111;\n" + "int secondInt = 7;\n" +
-                "int result = firstInt * secondInt;\n" +
-                "print(wrongVar);\n";
+
+//        String code = "int firstInt = 111;\n" + "int secondInt = 7;\n" +
+//                "int result = firstInt * secondInt;\n" +
+//                "print(result);\n";
+
+//        String code = "int myInt = 12;\n" +
+//                "if(myInt == 12){\n" +
+//                "print(\"yo yo yo\");\n" +
+//                "}\n";
+
+        String code = "int intToPrint = 123;" +
+                "repeat 3 times {\n" +
+                "print(intToPrint);" +
+                "}\n" +
+                "print(\"done\");\n";
+
         CharStream stream = CharStreams.fromString(code);
         StayLexer lexer = new StayLexer(stream);
         CommonTokenStream tokens = new CommonTokenStream(lexer);

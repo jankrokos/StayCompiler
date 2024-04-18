@@ -13,6 +13,8 @@ EQ : '==' ;
 AND : 'and' ;
 OR : 'or' ;
 NOT : 'not' ;
+TRUE : 'true' ;
+FALSE : 'false' ;
 
 COMMA : ',' ;
 DOT : '.' ;
@@ -28,6 +30,9 @@ STRING_TYPE : 'str' ;
 
 PRINT : 'print' ;
 READ : 'read' ;
+IF : 'if' ;
+REPEAT : 'repeat' ;
+TIMES : 'times' ;
 
 INT : [0-9]+ ;
 STRING : '"' ( ~('\\'|'"') )* '"' ;

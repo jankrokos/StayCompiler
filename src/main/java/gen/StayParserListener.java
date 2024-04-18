@@ -18,6 +18,16 @@ public interface StayParserListener extends ParseTreeListener {
 	 */
 	void exitProgram(StayParser.ProgramContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link StayParser#block}.
+	 * @param ctx the parse tree
+	 */
+	void enterBlock(StayParser.BlockContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link StayParser#block}.
+	 * @param ctx the parse tree
+	 */
+	void exitBlock(StayParser.BlockContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link StayParser#stat}.
 	 * @param ctx the parse tree
 	 */
@@ -67,6 +77,56 @@ public interface StayParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitReadStat(StayParser.ReadStatContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link StayParser#ifStat}.
+	 * @param ctx the parse tree
+	 */
+	void enterIfStat(StayParser.IfStatContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link StayParser#ifStat}.
+	 * @param ctx the parse tree
+	 */
+	void exitIfStat(StayParser.IfStatContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link StayParser#loopStat}.
+	 * @param ctx the parse tree
+	 */
+	void enterLoopStat(StayParser.LoopStatContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link StayParser#loopStat}.
+	 * @param ctx the parse tree
+	 */
+	void exitLoopStat(StayParser.LoopStatContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link StayParser#repetitions}.
+	 * @param ctx the parse tree
+	 */
+	void enterRepetitions(StayParser.RepetitionsContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link StayParser#repetitions}.
+	 * @param ctx the parse tree
+	 */
+	void exitRepetitions(StayParser.RepetitionsContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link StayParser#blockif}.
+	 * @param ctx the parse tree
+	 */
+	void enterBlockif(StayParser.BlockifContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link StayParser#blockif}.
+	 * @param ctx the parse tree
+	 */
+	void exitBlockif(StayParser.BlockifContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link StayParser#boolValue}.
+	 * @param ctx the parse tree
+	 */
+	void enterBoolValue(StayParser.BoolValueContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link StayParser#boolValue}.
+	 * @param ctx the parse tree
+	 */
+	void exitBoolValue(StayParser.BoolValueContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link StayParser#intAssignment}.
 	 * @param ctx the parse tree

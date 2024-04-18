@@ -12,7 +12,10 @@ public class StayToLLVMListener extends StayParserBaseListener {
     Set<String> floatVariables = new HashSet<>();
     Set<String> stringVariables = new HashSet<>();
     private String code = "";
+    Stack<Integer> brstack = new Stack<>();
+
     int reg = 1;
+    int br = 0;
 
     public String getResult() {
         StringBuilder result = new StringBuilder();
@@ -160,6 +163,92 @@ public class StayToLLVMListener extends StayParserBaseListener {
 
         scanf(id);
     }
+
+    @Override
+    public void enterBlockif(StayParser.BlockifContext ctx) {
+        ifStart();
+    }
+
+    @Override
+    public void exitBlockif(StayParser.BlockifContext ctx) {
+        ifEnd();
+    }
+
+    @Override
+    public void exitBoolValue(StayParser.BoolValueContext ctx) {
+        String id = ctx.ID().getText();
+        String value = ctx.INT().getText();
+
+        if (intVariables.contains(id)) {
+            icmp(id, value);
+        } else {
+            System.err.println("Line " + ctx.getStart().getLine() + ", unknown variable: " + id);
+        }
+    }
+
+    @Override
+    public void exitRepetitions(StayParser.RepetitionsContext ctx) {
+        String repetitions = ctx.INT().getText();
+        repeatStart(repetitions);
+    }
+
+    @Override
+    public void exitBlock(StayParser.BlockContext ctx) {
+        if (ctx.getParent() instanceof StayParser.LoopStatContext) {
+            repeatEnd();
+        }
+    }
+
+    void repeatStart(String repetitions) {
+        code += "    %" + reg + " = alloca i32\n";
+        int counter = reg;
+        reg++;
+        code += "    store i32 " + "0" + ", i32* %" + counter + "\n";
+        br++;
+        code += "    br label %cond" + br + "\n";
+        code += "cond" + br + ":\n";
+
+        code += "    %" + reg + " = load i32* %" + counter + "\n";
+        reg++;
+        code += "    %" + reg + " = add i32 " + "%" + (reg - 1) + ", " + "1" + "\n";
+        reg++;
+        code += "    store i32 " + "%" + (reg - 1) + ", i32* %" + counter + "\n";
+
+        code += "    %" + reg + " = icmp slt i32 %" + (reg - 2) + ", " + repetitions + "\n";
+        reg++;
+
+        code += "    br i1 %" + (reg - 1) + ", label %true" + br + ", label %false" + br + "\n";
+        code += "true" + br + ":\n";
+        brstack.push(br);
+    }
+
+    void repeatEnd() {
+        int b = brstack.pop();
+        code += "    br label %cond" + b + "\n";
+        code += "false" + b + ":\n";
+    }
+
+    void ifStart() {
+        br++;
+        code += "    br i1 %" + (reg - 1) + ", label %true" + br + ", label %false" + br + "\n";
+        code += "true" + br + ":\n";
+        brstack.push(br);
+    }
+
+
+    void ifEnd() {
+        int b = brstack.pop();
+        code += "    br label %false" + b + "\n";
+        code += "false" + b + ":\n";
+    }
+
+    void icmp(String id, String value) {
+        code += "    %" + reg + " = load i32* %" + id + "\n";
+        reg++;
+        code += "    %" + reg + " = icmp eq i32 %" + (reg - 1) + ", " + value + "\n";
+        reg++;
+    }
+
 
     void printfInt(String id) {
         code += "    %" + reg + " = load i32* %" + id + "\n";

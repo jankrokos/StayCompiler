@@ -17,6 +17,12 @@ public interface StayParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitProgram(StayParser.ProgramContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link StayParser#block}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBlock(StayParser.BlockContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link StayParser#stat}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -46,6 +52,36 @@ public interface StayParserVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitReadStat(StayParser.ReadStatContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link StayParser#ifStat}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIfStat(StayParser.IfStatContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link StayParser#loopStat}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLoopStat(StayParser.LoopStatContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link StayParser#repetitions}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitRepetitions(StayParser.RepetitionsContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link StayParser#blockif}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBlockif(StayParser.BlockifContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link StayParser#boolValue}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBoolValue(StayParser.BoolValueContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link StayParser#intAssignment}.
 	 * @param ctx the parse tree
